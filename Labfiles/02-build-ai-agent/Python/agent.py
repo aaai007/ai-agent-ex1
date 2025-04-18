@@ -28,7 +28,6 @@ def main():
         print(data)
 
     # Connect to the Azure AI Foundry project
-    # Connect to the Azure AI Foundry project
     project_client = AIProjectClient.from_connection_string(
         credential=DefaultAzureCredential
             (exclude_environment_credential=True,
@@ -37,8 +36,7 @@ def main():
     )
     with project_client:
 
-        # Upload the data file and create a CodeInterpreterTool
-        # Upload the data file and create a CodeInterpreterTool
+        # Upload the data file and create a CodeInterpreterTool in AI Agent
         file = project_client.agents.upload_file_and_poll(
              file_path=file_path, purpose=FilePurpose.AGENTS
         )
@@ -46,19 +44,17 @@ def main():
 
         code_interpreter = CodeInterpreterTool(file_ids=[file.id])
 
-        # Define an agent that uses the CodeInterpreterTool
-        # Define an agent that uses the CodeInterpreterTool
+        # Define an agent that uses the CodeInterpreterTool in AI Agent
         agent = project_client.agents.create_agent(
             model=MODEL_DEPLOYMENT,
             name="data-agent",
-            instructions="You are an AI agent that analyzes the data in the file that has been uploaded. If the user requests a chart, create it and save it as a .png file.",
+            instructions="You are an AI agent that analyzes the billing data in the file that has been uploaded.",
             tools=code_interpreter.definitions,
             tool_resources=code_interpreter.resources,
         )
         print(f"Using agent: {agent.name}")
 
-        # Create a thread for the conversation
-        # Create a thread for the conversation
+        # Create a thread for the conversation in AI Agent
         thread = project_client.agents.create_thread()
     
         # Loop until the user types 'quit'
@@ -72,7 +68,6 @@ def main():
                 continue
 
             # Send a prompt to the agent
-            # Send a prompt to the agent
             message = project_client.agents.create_message(
                 thread_id=thread.id,
                 role="user",
@@ -82,18 +77,15 @@ def main():
             run = project_client.agents.create_and_process_run(thread_id=thread.id, agent_id=agent.id)
 
             # Check the run status for failures
-            # Check the run status for failures
             if run.status == "failed":
                 print(f"Run failed: {run.last_error}")
     
-            # Show the latest response from the agent
             # Show the latest response from the agent
             messages = project_client.agents.list_messages(thread_id=thread.id)
             last_msg = messages.get_last_text_message_by_role("assistant")
             if last_msg:
                 print(f"Last Message: {last_msg.text.value}")
 
-        # Get the conversation history
         # Get the conversation history
         print("\nConversation Log:\n")
         messages = project_client.agents.list_messages(thread_id=thread.id)
@@ -103,13 +95,10 @@ def main():
 
 
         # Get any generated files
-        # Get any generated files
         for file_path_annotation in messages.file_path_annotations:
             project_client.agents.save_file(file_id=file_path_annotation.file_path.file_id, file_name=Path(file_path_annotation.text).name)
             print(f"File saved as {Path(file_path_annotation.text).name}")
 
-
-        # Clean up
         # Clean up
         project_client.agents.delete_agent(agent.id)
         project_client.agents.delete_thread(thread.id)
