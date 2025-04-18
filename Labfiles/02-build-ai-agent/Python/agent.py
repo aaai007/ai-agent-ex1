@@ -5,7 +5,6 @@ from pathlib import Path
 
 
 # Add references
-# Add references
 from azure.identity import DefaultAzureCredential
 from azure.ai.projects import AIProjectClient
 from azure.ai.projects.models import FilePurpose, CodeInterpreterTool
