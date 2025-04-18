@@ -1,28 +1,21 @@
-Month, Year, Data, Bill
-Jan, 2023, 1.1GB, 30.00
-Feb, 2023, 1.2GB, 30.00
-Mar, 2023, 3GB, 30.00
-Apr, 2023, 2.3GB, 30.00
-May, 2023, 1.8GB, 30.00
-Jun, 2023, 1.6GB, 30.00
-Jul, 2023, 4.7GB, 47.00
-Aug, 2023, 5.9GB, 59.00
-Sep, 2023, 1.8GB, 30.00
-Oct, 2023, 1.6GB, 30.00
-Nov, 2023, 3.7GB, 37.00
-Dec, 2023, 2.9GB, 30.00
-Jan, 2024, 1.5GB, 30.00
-Feb, 2024, 2.2GB, 30.00
-Mar, 2024, 3GB, 30.00
-Apr, 2024, 2.3GB, 30.00
-May, 2024, 1.8GB, 30.00
-Jun, 2024, 1.6GB, 30.00
-Jul, 2024, 2.7GB, 30.00
-Aug, 2024, 0.9GB, 30.00
-Sep, 2024, 1.8GB, 30.00
-Oct, 2024, 1.6GB, 30.00
-Nov, 2024, 1.7GB, 30.00
-Dec, 2024, 2.9GB, 30.00
-Jan, 2025, 1.5GB, 30.00
-Feb, 2025, 2.2GB, 30.00
-Mar, 2025, 5.9GB, 59.00
+This data file has 2 columns of data. 
+The 1st column has the month for the cell phone bill, the second column has the bill amount in US Dollars. 
+At the end of the file, there is a formula on how the monthly bill is calculates based on gigabytes (GB) of data used. 
+
+Month, Bill
+Jan, 30.00
+Feb, 30.00
+Mar, 30.00
+Apr, 30.00
+May, 30.00
+Jun, 30.00
+Jul, 47.00
+Aug, 59.00
+Sep, 30.00
+Oct, 30.00
+Nov, 37.00
+Dec, 30.00
+
+Billing formula:
+Bill = 30.00 for upto 3 GB of data usage
+For each additional 0.1GB, an additional charge of 1.00 is incurred
